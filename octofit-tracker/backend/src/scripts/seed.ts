@@ -5,6 +5,7 @@ import { Activity } from '../models/Activity';
 
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 
+// Seed development/test data for the OctoFit database with starter users, teams, and activities.
 async function seedDatabase() {
   try {
     await mongoose.connect(connectionString);
