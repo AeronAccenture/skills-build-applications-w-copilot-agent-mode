@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
@@ -9,7 +8,11 @@ export default function Activities() {
   useEffect(() => {
     async function loadActivities() {
       try {
-        const response = await fetch(`${getApiBaseUrl()}/api/activities`);
+        const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+        const apiUrl = codespaceName
+          ? `https://${codespaceName}-8000.app.github.dev/api/activities`
+          : 'http://localhost:8000/api/activities';
+        const response = await fetch(apiUrl);
         if (!response.ok) throw new Error('Failed to fetch activities');
         const data = await response.json();
         setActivities(Array.isArray(data) ? data : data.results || []);
